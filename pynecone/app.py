@@ -35,6 +35,9 @@ class App(Base):
     # The Socket.IO AsyncServer.
     sio: AsyncServer = None
 
+    # The socket App
+    socket_app: ASGIApp = None
+
     # The state class to use for the app.
     state: Type[State] = DefaultState
 
