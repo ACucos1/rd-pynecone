@@ -139,17 +139,22 @@ export const updateState = async (state, setState, result, setResult, router, so
  * @param setResult The function to set the result.
  * @param endpoint The endpoint to connect to.
  */
-export const connect = async (socket, state, setState, result, setResult, router, endpoint) => {
+export const connect = async (socket, state, setState, result, setResult, router, endpoint, transports) => {
+
+  endpoint_url = new URL(endpoint)
   // Create the socket.
   socket.current = io(endpoint, {
-    'path': '/event',
+    path: endpoint_url['pathname'],
+    transports: transports,
+    autoUnref: false,
   });
 
   // Once the socket is open, hydrate the page.
   socket.current.on('connect', () => {
     updateState(state, setState, result, setResult, router, socket.current);
   });
-
+  
+  const endpoint_url = new URL(endpoint)
   // On each received message, apply the delta and set the result.
   socket.current.on('event', function (update) {
     update = JSON.parse(update);
