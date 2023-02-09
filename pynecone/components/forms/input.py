@@ -24,6 +24,9 @@ class Input(ChakraComponent):
     # The type of input.
     type_: Var[str] = "text"  # type: ignore
 
+    # For time/date pickers, the increment between each value
+    step_: Var[str] = "any"
+
     # The border color when the input is invalid.
     error_border_color: Var[str]
 
